@@ -1,0 +1,9 @@
+body {
+    background-color: #777;
+}
+
+#gameCanvas {
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+}

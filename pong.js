@@ -16,7 +16,7 @@ const PADDLE_THICKNESS = 10;
 //scores related variables and constants
 var playerScore = 0;
 var computerScore = 0;
-const WINNING_SCORE = 2;
+const WINNING_SCORE = 5;
 var showingWinScreen = false;
 
 function getMousePosition(evt) {
@@ -59,13 +59,17 @@ window.onload = function () {
     });
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function ballReset() {
     if(playerScore >= WINNING_SCORE || computerScore >= WINNING_SCORE) {
         showingWinScreen = true;
     }
 
-    ballSpeedX = 10;
-    ballSpeedY = 4;
+    ballSpeedX = getRandomInt(1, 10);
+    ballSpeedY = getRandomInt(1, 10);
     ballX = canvas.width/2;
     ballY = canvas.height/2;
 }
@@ -108,6 +112,10 @@ function move() {
     if(ballX >= canvas.width) {
         if(ballY > computerPaddleY && ballY < computerPaddleY+PADDLE_HEIGHT) {
             ballSpeedX = -ballSpeedX;
+            
+            var deltaY = ballY - (computerPaddleY + (PADDLE_HEIGHT/2));
+
+            ballSpeedY = deltaY * 0.35;
         }else {
             playerScore++; // MUST BE BEFORE ballReset()
             ballReset();
